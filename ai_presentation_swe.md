@@ -1,5 +1,5 @@
-# AI Tools for Software Development
-## A Practical Guide for Our SWE Team
+# AI Tools for Software Development  
+## A Practical Guide for Software Engineers  
 
 ---
 
@@ -13,250 +13,217 @@
 
 ---
 
-## When to Use AI vs. Manual Coding
+## Core AI Concepts for Developers
 
-### The Strategic Decision Framework
+### Large Language Models (LLMs)
+**Definition:**  
+A type of AI trained to understand and generate human-like text based on vast amounts of data.  
+**Analogy:** Think of it as an incredibly fast "autocomplete" on steroids — except it can write code, summarize docs, or debug issues.
 
-**AI is Excellent For:**
-- Retrieving details from **unstructured data**
-- Rapid prototyping and exploration
-- Learning unfamiliar libraries/frameworks
-- Generating boilerplate and repetitive code
-- Code explanation and documentation
+---
 
-**Manual Coding is Better For:**
-- Working with **structured data** that can be parsed recursively
-- Performance-critical implementations
-- Complex business logic requiring deep understanding
-- Security-sensitive code
-- System architecture decisions
+### Context Window
+**Definition:**  
+The maximum amount of text (including your prompt and the model’s output) the model can "remember" in one go.  
+**Analogy:** Like the whiteboard size in a meeting room — too small, and you can’t fit all the details at once.
 
-### Real-World Overkill Examples
-❌ **Don't use AI when simpler solutions exist:**
-- Using LLMs to parse JSON instead of `JSON.parse()`
-- Building LLM tool calls when direct API requests suffice
-- Creating AI agents for tasks a basic script can handle
+---
 
-### **Key Principle:** Start simple, scale complexity only when needed
+### Temperature
+**Definition:**  
+A parameter that controls how "creative" the AI is.  
+- Low = predictable, safe answers  
+- High = more variety, possible creativity but also risk of nonsense  
+**Analogy:** Like adding spice to a dish — a pinch for stability, more if you want unexpected flavors.
+
+---
+
+### System Prompt
+**Definition:**  
+Special instruction that sets the model’s role and style before the conversation starts.  
+**Example:** “You are a senior frontend engineer who writes clean, commented code.”
+
+---
+
+### Prompt Chaining
+**Definition:**  
+Breaking a complex task into smaller AI prompts, feeding outputs from one step into the next.  
+**Analogy:** Like passing work between teammates in a relay race.
+
+---
 
 ---
 
 ## Agents vs. Workflows
 
-### Definitions
+### Workflow Approach
+**Definition:**  
+A predefined sequence of steps for the AI to follow, often with strict control.  
+**Analogy:** Like a factory assembly line — each station has a fixed role.  
 
-**Workflow Approach:**
-- Predefined sequence of steps
-- Controlled and predictable
-- Uses LLMs for specific tasks within the flow
-- Lower complexity, token consumption, and cost
-- Higher control over outputs
+- Predictable and easier to debug  
+- Lower cost and resource use  
+- Best when steps are well-known
 
-**Agent Approach:**
-- Freedom to make decisions and adapt
-- Can choose between multiple strategies
-- Higher complexity, token consumption, and cost
-- Less predictable but more flexible
+---
 
-### Real Examples from Our Work
+### Agent Approach
+**Definition:**  
+An AI that can decide its own next steps and call different tools autonomously.  
+**Analogy:** Like a junior developer with initiative — they might find creative solutions, but you need to review their work.  
 
-**Workflow Example: Slack Support Assistant**
-```
-1. LLM extracts details from user message (structured query)
-2. Query logs using extracted details
-3. LLM analyzes logs with specific instructions
-4. Return formatted response via Slack API
-```
+- More flexible and adaptable  
+- Higher complexity and cost  
+- Less predictable
 
-**Agent Example: Advanced Support Agent**
-- Same initial flow BUT can decide to:
-  - Trigger alerts
-  - Contact team members
-  - Create intake requests
-  - Escalate issues
-  - Take autonomous actions based on analysis
+---
+
+### Example Scenarios
+
+**Workflow Example:** Log Analysis Bot  
+
+1. Extract error details from user input
+2. Search logs
+3. Summarize findings in a fixed format
+
+
+**Agent Example:** Support Agent  
+- Same initial steps, but can:  
+  - Create tickets  
+  - Notify teammates  
+  - Run additional diagnostics  
+  - Make follow-up decisions
+
+---
 
 ### Decision Framework
-- **Use Workflows** for predictable, controlled processes
-- **Use Agents** when you need autonomous decision-making
-- **Remember:** Agents = Higher cost + Lower control
+- Use **Workflows** for predictable, controlled processes  
+- Use **Agents** for open-ended problem-solving  
+- Remember: More autonomy = more review needed
 
 ---
 
 ## Tool Use vs. MCPs (Model Context Protocol)
 
 ### Tool Use
-- **What:** Custom functions you define for the LLM
-- **When:** Specific to your application needs
-- **Example:** Custom Slack API functions, internal database queries
-- **Best for:** One-off solutions, proprietary systems
+**Definition:**  
+Custom functions or APIs you connect to an AI model.  
+**Example:** Call your internal database or deploy a service via a script.  
+**Best for:** One-off integrations tied to your specific environment.
+
+---
 
 ### MCPs
-- **What:** Standardized way for models to connect to external systems
-- **When:** Working with common services and tools
-- **Example:** Browser automation, HTML canvas inspection, console debugging
-- **Best for:** Reusable integrations across different models
+**Definition:**  
+An open standard that lets AI tools connect to common services in a reusable way.  
+**Analogy:** Like a universal power adapter for AI tools.  
+**Example:** Browser automation, GitHub repo analysis, or console debugging.  
+**Best for:** Reusable integrations that work across different models.
+
+---
 
 ### Recommendation
-- Start with **Tool Use** for custom business logic
-- Explore **MCPs** for standard integrations (GitHub, browsers, databases)
+- Start with **Tool Use** for specialized needs  
+- Explore **MCPs** for portable, standard integrations
 
 ---
 
 ## IDEs and CLI Tools
 
-### Currently Approved: GitHub Copilot ✅
-**Proven Productivity Gains:**
-- **Test writing:** 4 hours → 20 minutes (12x faster)
-- **API endpoint translation (JS to Go):** 2 days → 2 hours (8x faster)  
-- **Prototyping/PoCs:** 3-4 days → 1-2 hours (24-48x faster)
+### Examples
+- **GitHub Copilot:** AI-powered code suggestions in IDEs.  
+- **Cursor:** IDE with enhanced context awareness.  
+- **Claude Code CLI:** Terminal-based AI coding.  
+- **Ollama:** Run models locally for privacy.  
 
 **Best Practices:**
-- Use thoughtful file selection for context
-- Don't accept suggestions blindly
-- Leverage for boilerplate, not complex business logic
-
-### Personal Exploration Options
-- **Cursor:** Enhanced IDE experience with better context awareness
-- **Claude Code:** CLI tool for agentic coding tasks
-- **Ollama:** Local model running for privacy-sensitive work
-
-### Currently Approved: Gemini in GCP ✅
-- Available for GCP workload identity
-- Good general-purpose model
-- Use for analysis, planning, and code assistance
+- Provide relevant files as context  
+- Don’t accept suggestions blindly  
+- Use for boilerplate, not critical business logic
 
 ---
 
 ## Model Selection Strategy
 
-### Our Recommendations
+### How to Choose
+1. Match model strength to task complexity  
+2. Use cost-efficient models for simple tasks  
+3. Experiment with different models for learning
 
-**Claude (Personal use)**
-- **Best for:** Complex coding tasks, detailed explanations
-- **Why:** Superior code quality and understanding
-- **Use cases:** Architecture decisions, code reviews, complex debugging
+---
 
-**Gemini (Approved for work)**
-- **Best for:** General development tasks, analysis
-- **Use cases:** Code assistance, planning, integration work
-
-**GPT Models (Limited access)**
-- **Noted strengths:** Planning and strategy (especially o3)
-- **Our experience:** Limited, but worth monitoring
-
-### Selection Framework
-1. **Start with approved tools** (Copilot, Gemini)
-2. **Consider task complexity** - match model capabilities to problem
-3. **Factor in cost** - don't use premium models for simple tasks
-4. **Personal exploration** is fine for learning
+### Example Model Strengths (Publicly Available)
+- **Claude:** Great for detailed reasoning and explanations  
+- **GPT-4/4o:** Strong general purpose + strategy/planning  
+- **Gemini:** Balanced for code and general tasks  
+- **LLaMA, Mistral, etc.:** Open-source, self-hosted options
 
 ---
 
 ## Understanding Costs and Resources
 
-### Token Economics
-- **Every AI interaction costs tokens**
-- **More context = Higher costs**
-- **Agent workflows = Significantly more expensive than simple completions**
+**Token Economics:**  
+- Every interaction costs tokens (words in/out)  
+- More context = more cost  
+- Agents often use far more tokens than workflows  
 
-### Cost Mindfulness Strategies
-- Be selective with context (don't dump entire codebase)
-- Use simpler models for routine tasks
-- Cache contexts when possible
-- Monitor usage patterns (even if RE team handles billing)
-
-### On-Premise vs. Cloud
-- **Cloud:** Easier setup, latest models, managed scaling
-- **On-Premise:** Data privacy, predictable costs, network independence
-- **Our setup:** Hybrid approach with approved cloud services
+**Cost Tips:**  
+- Only pass relevant files/snippets  
+- Cache repeated instructions  
+- Use simpler models for repetitive work
 
 ---
 
 ## Context Engineering Best Practices
 
-### The Art of Selective Context
+**Do:**  
+- Provide focused, relevant context  
+- Include key docs or code only when needed  
 
-**Do:**
-- ✅ Select relevant files for specific problems
-- ✅ Provide focused, targeted context
-- ✅ Ask clear, specific questions
-- ✅ Hint at potential issues or solutions
+**Don’t:**  
+- Dump your entire codebase for a small bug  
+- Ask vague, open-ended questions
 
-**Don't:**
-- ❌ Feed entire codebase for simple problems
-- ❌ Include irrelevant files that add noise
-- ❌ Ask vague questions without direction
+---
 
-### Context Strategies by Scenario
+### Embeddings
+**Definition:**  
+Numerical representations of text/code that let AI compare meaning and find similar items.  
+**Analogy:** Like converting books into unique barcodes based on their content.  
 
-**Unknown/Greenfield Projects:**
-- Broader context helpful for understanding patterns
-- Include architecture docs, README files
-
-**Specific Problem Solving:**
-- Narrow context to affected components
-- Include related test files and documentation
-
-**Code Reviews:**
-- Focus on changed files and their dependencies
-- Include relevant style guides or conventions
-
-### Vector Databases and RAG
-
-**When RAG Makes Sense:**
-- Large, searchable knowledge bases
-- Frequent queries against documentation
-- Team-wide knowledge sharing
-
-**When Simple Context is Enough:**
-- Small to medium codebases
-- One-off questions
-- Information fits in context window
-
-**Remember:** Don't over-engineer - start simple!
+**Used in:** Search, RAG (Retrieval Augmented Generation), semantic clustering.
 
 ---
 
 ## Fine-tuning vs. RAG vs. Simple Context
 
-### Decision Hierarchy (Start Here → Escalate Only If Needed)
+**Simple Context:**  
+- Add needed details directly in the prompt  
 
-1. **Simple Context/Prompting** 
-   - Try first for most scenarios
-   - Often sufficient for development tasks
+**RAG:**  
+- Store knowledge in a searchable database (vector DB)  
+- AI retrieves only relevant pieces for each query  
 
-2. **RAG (Retrieval Augmented Generation)**
-   - When knowledge base is large
-   - Need selective, up-to-date information
-   - Cost-effective for repeated queries
+**Fine-tuning:**  
+- Train the model on custom examples  
+- Expensive and harder to maintain
 
-3. **Fine-tuning**
-   - Only when RAG isn't sufficient
-   - Requires significant resources
-   - Consider: Do you really need this?
-
-### Our Recommendation
-- **Start with good prompting and context**
-- **Consider RAG for large documentation/knowledge bases**
-- **Avoid fine-tuning unless absolutely necessary**
+**Rule:** Start simple → RAG → Fine-tuning (only if truly necessary)
 
 ---
 
 ## Effective Prompting Strategies
 
-### Best Practices
+**Structure:**  
 
-**Structure Your Requests:**
-```
-Context: [What you're working on]
-Goal: [What you want to achieve]  
-Constraints: [Any limitations or requirements]
-Question: [Specific ask]
-```
+Context: [What’s happening]
+Goal: [What you want]
+Constraints: [Any limits]
+Question: [Direct request]
 
 **Use Examples:**
 - Show input/output examples when possible
+- Use rules like .github/copilot-instructions.md, .cursorrulles, etc for general guidance
 - Reference similar code patterns
 - Provide positive and negative examples
 
@@ -264,16 +231,9 @@ Question: [Specific ask]
 - "Write a React component" → "Write a React functional component with TypeScript that handles form validation"
 - "Fix this bug" → "This function throws TypeError on null values, please add proper null checking"
 
-### Prompt Engineering vs. Context Engineering
-
-**Context Engineering:** What information you provide
-**Prompt Engineering:** How you structure your requests
-
-Both matter - good context with poor prompting wastes tokens and time.
-
 ---
 
-## "Vibe Coding" - Opportunities and Risks
+## "Vibe Coding" – Risks and Uses
 
 ### Great For
 - **Rapid prototyping** new ideas
@@ -296,13 +256,17 @@ Both matter - good context with poor prompting wastes tokens and time.
 **Technical Debt:**
 - Solutions that work in isolation but don't integrate well
 - Security vulnerabilities from copy-paste coding
-- Performance issues from non-optimized solutions
+- Performance issues from non-optimized solutions 
+- Learning new frameworks  
+- Rapid prototypes  
 
-### Safe Vibe Coding Practices
-1. **Use for learning, not production**
-2. **Always review and understand generated code**
-3. **Refactor for maintainability**
-4. **Test thoroughly in context**
+**Risks:**  
+- Poor maintainability  
+- Hidden technical debt  
+
+**Safe Practice:**  
+- Use for exploration, not production  
+- Always review and test outputs
 
 ---
 
@@ -330,6 +294,26 @@ Both matter - good context with poor prompting wastes tokens and time.
 5. **Integrate** only after understanding
 
 **Golden Rule:** Never blindly accept LLM outputs
+
+---
+
+## Evaluating (Testing) LLMs
+
+**Why Evaluate?**  
+- Ensure accuracy, reliability, and safety  
+- Compare models objectively  
+
+**Common Approaches:**  
+1. **Benchmark Datasets:** Use public coding/problem datasets (e.g., HumanEval, MBPP)  
+2. **Custom Test Suites:** Create prompts and expected outputs for your domain  
+3. **Evals Frameworks:**  
+   - [OpenAI Evals](https://github.com/openai/evals) – test prompts systematically  
+   - [LangChain Benchmarks](https://docs.langchain.com) – measure RAG & agent performance  
+
+**Tips:**  
+- Test both quality and cost efficiency  
+- Include real-world edge cases  
+- Run evaluations regularly after model updates
 
 ---
 
@@ -395,50 +379,10 @@ Both matter - good context with poor prompting wastes tokens and time.
 
 ## Useful AI Tools for Development
 
-### Screenshot to Code
-- Convert designs to HTML/CSS/React
-- Rapid prototyping from mockups
-- Bridge design-to-development gap
-
-### Playwright MCP
-- Browser automation testing
-- E2E test generation and maintenance
-- Web scraping and data extraction
-
-### Transformers.js
-- Run LLMs directly in the browser
-- No server required for AI features
-- Privacy-friendly client-side processing
-
-### Jina AI
-- Convert websites to clean markdown
-- Documentation extraction
-- Content processing for RAG systems
-
----
-
-## Evaluation and Quality Assurance
-
-### Building Evaluation Framework
-
-**Code Quality Metrics:**
-- Correctness (does it work?)
-- Maintainability (can we modify it?)
-- Performance (is it efficient?)
-- Security (is it safe?)
-- Integration (does it fit our system?)
-
-**AI Output Assessment:**
-- Compare multiple AI solutions
-- Benchmark against manual implementations
-- Test edge cases and error conditions
-- Validate with team code reviews
-
-### Continuous Improvement
-- Track which AI tools work best for specific tasks
-- Document common failure patterns
-- Share successful prompting strategies
-- Build team knowledge base
+- **Screenshot to Code:** Convert UI mockups to HTML/CSS/React  
+- **Playwright MCP:** Automate browser tests  
+- **Transformers.js:** Run models in the browser  
+- **Jina AI:** Convert sites to clean markdown for RAG
 
 ---
 
@@ -487,22 +431,15 @@ Both matter - good context with poor prompting wastes tokens and time.
 - What metrics should we track to measure success?
 
 ### Questions and Open Discussion
-*[Time for team questions, concerns, and experience sharing]*
+*[Time for team questions, concerns, and experience sharing]* 
 
 ---
 
-## Resources and References
-
-### Documentation
-- [GitHub Copilot Best Practices](https://docs.github.com/en/copilot)
-- [Gemini API Documentation](https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/gemini)
-- [Anthropic Prompting Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview)
-
-### Internal Resources
-- RE Team for token usage and billing questions
-- Approved vendor list for new tool requests
-- Code review guidelines (now with AI considerations)
+## Resources
+- [Anthropic Prompting Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview)  
+- [OpenAI Evals](https://github.com/openai/evals)  
+- [LangChain Evaluation Docs](https://docs.langchain.com)  
 
 ---
 
-*Remember: AI is a tool to amplify your skills, not replace them. Use it wisely, stay curious, and keep building great software!*
+*Remember: AI is here to make you faster, not replace your skills. The best engineers use AI as a force multiplier while keeping their core abilities sharp.*
