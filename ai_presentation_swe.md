@@ -13,6 +13,17 @@
 
 ---
 
+## IDEs and CLI Tools
+
+### Examples
+- **GitHub Copilot:** AI-powered code suggestions in IDEs.  
+- **Cursor:** IDE with enhanced context awareness.  
+- **Claude Code CLI:** Terminal-based AI coding.  
+- **Ollama:** Run models locally for privacy.  
+- **Windsurf:** AI-powered IDE. Similar to Cursor or VS Code Copilot.
+
+---
+
 ## Core AI Concepts for Developers
 
 ### Large Language Models (LLMs)
@@ -29,41 +40,40 @@ The maximum amount of text (including your prompt and the model’s output) the 
 
 ---
 
-### Temperature
-**Definition:**  
-A parameter that controls how "creative" the AI is.  
-- Low = predictable, safe answers  
-- High = more variety, possible creativity but also risk of nonsense  
-**Analogy:** Like adding spice to a dish — a pinch for stability, more if you want unexpected flavors.
-
----
-
-### System Prompt
-**Definition:**  
-Special instruction that sets the model’s role and style before the conversation starts.  
-**Example:** “You are a senior frontend engineer who writes clean, commented code.”
-
----
-
 ### Prompt Chaining
 **Definition:**  
-Breaking a complex task into smaller AI prompts, feeding outputs from one step into the next.  
+Breaking a complex task into smaller AI prompts, feeding outputs from one step into the next.
 **Analogy:** Like passing work between teammates in a relay race.
 
 ---
 
+## Model Selection Strategy
+The quality of your AI output often depends on choosing the right model for the task.
+
+### How to Choose the right model for your task
+1. Match model strength to task complexity  
+2. Use cost-efficient models for simple tasks  
+3. Experiment with different models for learning
+
+### Example Model Strengths (Publicly Available)
+- **Claude:** Great for detailed reasoning and explanations  
+- **GPT-4/4o:** Strong general purpose + strategy/planning  
+- **Gemini:** Balanced for code and general tasks  
+- **LLaMA, Mistral, etc.:** Open-source, self-hosted options
+
 ---
 
 ## Agents vs. Workflows
+When implementing AI solutions, you can choose between two main approaches: Workflows and Agents.
 
 ### Workflow Approach
 **Definition:**  
 A predefined sequence of steps for the AI to follow, often with strict control.  
-**Analogy:** Like a factory assembly line — each station has a fixed role.  
+**Analogy:** Like a factory assembly line — each station has a fixed role.
 
 - Predictable and easier to debug  
 - Lower cost and resource use  
-- Best when steps are well-known
+- Best when steps or requests are well-known
 
 ---
 
@@ -73,6 +83,7 @@ An AI that can decide its own next steps and call different tools autonomously.
 **Analogy:** Like a junior developer with initiative — they might find creative solutions, but you need to review their work.  
 
 - More flexible and adaptable  
+- Better suited for open-ended tasks
 - Higher complexity and cost  
 - Less predictable
 
@@ -86,6 +97,15 @@ An AI that can decide its own next steps and call different tools autonomously.
 2. Search logs
 3. Summarize findings in a fixed format
 
+
+```javascript
+// Example: A simple workflow to analyze logs
+const analyzeLogs = async (userInput) => {
+   const errorDetails = extractErrorDetails(userInput); // use light weight model to extract structured data from user request
+   const logs = await searchLogs(errorDetails); // Search logs based on error details
+   return summarizeFindings(logs); // Analyze and summarize findings with again with an LLM 
+   };
+```
 
 **Agent Example:** Support Agent  
 - Same initial steps, but can:  
@@ -104,6 +124,7 @@ An AI that can decide its own next steps and call different tools autonomously.
 ---
 
 ## Tool Use vs. MCPs (Model Context Protocol)
+Models have limited built-in knowledge and capabilities. To extend their functionality, you can connect them to external tools or services.
 
 ### Tool Use
 **Definition:**  
@@ -128,70 +149,55 @@ An open standard that lets AI tools connect to common services in a reusable way
 
 ---
 
-## IDEs and CLI Tools
-
-### Examples
-- **GitHub Copilot:** AI-powered code suggestions in IDEs.  
-- **Cursor:** IDE with enhanced context awareness.  
-- **Claude Code CLI:** Terminal-based AI coding.  
-- **Ollama:** Run models locally for privacy.  
-
-**Best Practices:**
-- Provide relevant files as context  
-- Don’t accept suggestions blindly  
-- Use for boilerplate, not critical business logic
-
----
-
-## Model Selection Strategy
-
-### How to Choose
-1. Match model strength to task complexity  
-2. Use cost-efficient models for simple tasks  
-3. Experiment with different models for learning
-
----
-
-### Example Model Strengths (Publicly Available)
-- **Claude:** Great for detailed reasoning and explanations  
-- **GPT-4/4o:** Strong general purpose + strategy/planning  
-- **Gemini:** Balanced for code and general tasks  
-- **LLaMA, Mistral, etc.:** Open-source, self-hosted options
-
----
-
 ## Understanding Costs and Resources
+LLMs usage is typically billed based on the number of tokens processed (input + output). Managing context effectively is key to controlling costs.
 
 **Token Economics:**  
-- Every interaction costs tokens (words in/out)  
-- More context = more cost  
-- Agents often use far more tokens than workflows  
+- Every interaction costs tokens (input + output)  
+- More context = more tokens = higher cost  
+- Context doesn’t grow forever, but longer chats still add up  
+- Agents often consume far more tokens than simple workflows  
 
-**Cost Tips:**  
-- Only pass relevant files/snippets  
-- Cache repeated instructions  
-- Use simpler models for repetitive work
+**Cost-Saving Tips:**  
+- Only include relevant parts of the conversation or files  
+- Summarize or trim older history instead of sending it in full  
+- Cache repeated instructions or system prompts  
+- Use simpler/cheaper models for repetitive or low-stakes work
 
 ---
 
-## Context Engineering Best Practices
+## Context Engineering
+
+**Definition:**
+Originally a term for handling the chat history in conversations (pruning, summarizing, sliding windows, etc.), but it also the art of providing just the right amount of context (instructions, long term memory, state, tools, user prompt) to the AI for it to understand and respond effectively.  
+**Analogy:** Like giving a new team member just enough background to get started without overwhelming them with details.
+
+### Best Practices
 
 **Do:**  
-- Provide focused, relevant context  
-- Include key docs or code only when needed  
+- Provide focused, relevant context (e.g., specific files, initially pointing to a specific lines of code)
+- Include key docs or code only when needed
 
 **Don’t:**  
 - Dump your entire codebase for a small bug  
-- Ask vague, open-ended questions
+- Ask vague, open-ended questions like "What’s wrong with my code?", "fix this", "it doesn't work", etc.
 
 ---
 
-### Embeddings
-**Definition:**  
-Numerical representations of text/code that let AI compare meaning and find similar items.  
-**Analogy:** Like converting books into unique barcodes based on their content.  
+## Prompt Engineering
 
-**Used in:** Search, RAG (Retrieval Augmented Generation), semantic clustering.
+**Definition:**  
+The craft of designing effective prompts to get the best results from AI models.  
+**Analogy:** Like writing clear instructions for a teammate to ensure they understand exactly what you need
+
+**Do:**
+- Be specific about your needs (e.g., "Write a React functional component with TypeScript that handles form validation")
+- Use structured formats (context, goal, constraints, question)
+- Provide examples of desired input/output when possible
+- Use rules like .github/copilot-instructions.md, .cursorrulles, etc for general guidance
+
+**Don’t:**  
+- Ask vague, open-ended questions like "What’s wrong with my code?", "fix this", "it doesn't work", etc.
 
 ---
 
@@ -212,24 +218,12 @@ Numerical representations of text/code that let AI compare meaning and find simi
 
 ---
 
-## Effective Prompting Strategies
+### Embeddings
+**Definition:**  
+Numerical representations of text/code that let AI compare meaning and find similar items.  
+**Analogy:** Like converting books into unique barcodes based on their content.  
 
-**Structure:**  
-
-Context: [What’s happening]
-Goal: [What you want]
-Constraints: [Any limits]
-Question: [Direct request]
-
-**Use Examples:**
-- Show input/output examples when possible
-- Use rules like .github/copilot-instructions.md, .cursorrulles, etc for general guidance
-- Reference similar code patterns
-- Provide positive and negative examples
-
-**Be Specific:**
-- "Write a React component" → "Write a React functional component with TypeScript that handles form validation"
-- "Fix this bug" → "This function throws TypeError on null values, please add proper null checking"
+**Used in:** Search, RAG (Retrieval Augmented Generation), semantic clustering.
 
 ---
 
@@ -297,26 +291,6 @@ Question: [Direct request]
 
 ---
 
-## Evaluating (Testing) LLMs
-
-**Why Evaluate?**  
-- Ensure accuracy, reliability, and safety  
-- Compare models objectively  
-
-**Common Approaches:**  
-1. **Benchmark Datasets:** Use public coding/problem datasets (e.g., HumanEval, MBPP)  
-2. **Custom Test Suites:** Create prompts and expected outputs for your domain  
-3. **Evals Frameworks:**  
-   - [OpenAI Evals](https://github.com/openai/evals) – test prompts systematically  
-   - [LangChain Benchmarks](https://docs.langchain.com) – measure RAG & agent performance  
-
-**Tips:**  
-- Test both quality and cost efficiency  
-- Include real-world edge cases  
-- Run evaluations regularly after model updates
-
----
-
 ## From Hands-on Coding to Supervising AI Outputs
 
 ### The Skill Evolution
@@ -374,6 +348,26 @@ Question: [Direct request]
 - Maintain core competencies through practice
 - Don't let AI become a crutch
 - Stay curious and keep learning
+
+---
+
+## Evaluating (Testing) LLMs
+
+**Why Evaluate?**  
+- Ensure accuracy, reliability, and safety  
+- Compare models objectively  
+
+**Common Approaches:**  
+1. **Benchmark Datasets:** Use public coding/problem datasets (e.g., HumanEval, MBPP)  
+2. **Custom Test Suites:** Create prompts and expected outputs for your domain  
+3. **Evals Frameworks:**  
+   - [OpenAI Evals](https://github.com/openai/evals) – test prompts systematically  
+   - [LangChain Benchmarks](https://docs.langchain.com) – measure RAG & agent performance  
+
+**Tips:**  
+- Test both quality and cost efficiency  
+- Include real-world edge cases  
+- Run evaluations regularly after model updates
 
 ---
 
@@ -437,8 +431,10 @@ Question: [Direct request]
 
 ## Resources
 - [Anthropic Prompting Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview)  
-- [OpenAI Evals](https://github.com/openai/evals)  
-- [LangChain Evaluation Docs](https://docs.langchain.com)  
+- [Building effective prompts](https://www.anthropic.com/engineering/building-effective-agents)
+- [Context Engineering overview](https://www.philschmid.de/context-engineering)
+- [Building Effective Agents](https://youtu.be/aHCDrAbH_go?si=ALNLReTgUgB-wpL3)  
+- [LangChain Context Engineering](https://www.youtube.com/watch?v=nyKvyRrpbyY&ab_channel=LangChain)  
 
 ---
 
