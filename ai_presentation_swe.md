@@ -181,6 +181,7 @@ Originally a term for handling the chat history in conversations (pruning, summa
 **Don’t:**  
 - Dump your entire codebase for a small bug  
 - Ask vague, open-ended questions like "What’s wrong with my code?", "fix this", "it doesn't work", etc.
+- Avoid very long chat histories unless necessary because that can lead to the LLM "forgetting" important details or context as the context window fills up and context could be lost/pruned/removed.
 
 ---
 
