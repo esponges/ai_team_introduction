@@ -61,6 +61,10 @@ The quality of your AI output often depends on choosing the right model for the 
 - **Gemini:** Balanced for code and general tasks  
 - **LLaMA, Mistral, etc.:** Open-source, self-hosted options
 
+### Top Coding Models benchmarks
+Best models for coding (or any task) change frequently, so always check the latest benchmarks.
+https://livebench.ai/#/
+
 ---
 
 ## Agents vs. Workflows
